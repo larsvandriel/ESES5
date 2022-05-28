@@ -9,25 +9,25 @@ namespace ProductManagementSystem.Logic
     public class ProductManager : IProductManager
     {
         public IProductRepository Repository { get; set; }
-        public IProductEventSender EventSender { get; set; }
+        public IMessageBusClient MessageBusClient { get; set; }
 
-        public ProductManager(IProductRepository repository, IProductEventSender eventSender)
+        public ProductManager(IProductRepository repository, IMessageBusClient messageBusClient)
         {
             Repository = repository;
-            EventSender = eventSender;
+            MessageBusClient = messageBusClient;
         }
 
         public Product CreateProduct(Product product)
         {
             product = Repository.SaveProduct(product);
-            EventSender.SendProductCreatedEvent(product);
+            MessageBusClient.SendProductCreatedEvent(product);
             return product;
         }
 
         public void DeleteProduct(Product product)
         {
             Repository.DeleteProduct(product);
-            EventSender.SendProductDeletedEvent(product);
+            MessageBusClient.SendProductDeletedEvent(product);
         }
 
         public List<Product> GetAll()
@@ -43,7 +43,7 @@ namespace ProductManagementSystem.Logic
         public void UpdateProduct(Product product)
         {
             Repository.UpdateProduct(product);
-            EventSender.SendProductUpdatedEvent(product);
+            MessageBusClient.SendProductUpdatedEvent(product);
         }
 
         public void UpdateStock(Guid productId, int newStockAmount)
