@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InventoryManagementSystem.Logic
 {
-    public interface IInventoryEventSender
+    public interface IMessageBusClient
     {
         void SendUpdateStockEvent(Product product);
         void SendOrderApprovedEvent(Guid orderId);
