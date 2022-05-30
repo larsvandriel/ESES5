@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8S", "K8S", "{352D6913-4C35-4E01-BA12-7039BB4B86E0}"
 	ProjectSection(SolutionItems) = preProject
 		ingress-srv.yaml = ingress-srv.yaml
+		inventory-depl.yaml = inventory-depl.yaml
 		local-pvc.yaml = local-pvc.yaml
 		mssql-product-depl.yaml = mssql-product-depl.yaml
 		product-depl.yaml = product-depl.yaml
@@ -24,13 +25,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8S", "K8S", "{352D6913-4C3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InventoryManagementSystem", "InventoryManagementSystem", "{A47BEE60-8BF8-4E9A-AC9F-BAF84AD9EEC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ims_logic", "InventoryManagementSystem\ims_logic\ims_logic.csproj", "{68EC7FE4-C868-447C-AB19-376320A27F65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims_logic", "InventoryManagementSystem\ims_logic\ims_logic.csproj", "{68EC7FE4-C868-447C-AB19-376320A27F65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ims_dal", "InventoryManagementSystem\ims_dal\ims_dal.csproj", "{EFA414E8-0A2E-4D6E-A8C4-99B8E2C58D88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims_dal", "InventoryManagementSystem\ims_dal\ims_dal.csproj", "{EFA414E8-0A2E-4D6E-A8C4-99B8E2C58D88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ims_rabbitmq_access_layer", "InventoryManagementSystem\ims_rabbitmq_access_layer\ims_rabbitmq_access_layer.csproj", "{96D5BB50-1C46-4B3A-9EF4-5E0FB3D78D8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims_rabbitmq_access_layer", "InventoryManagementSystem\ims_rabbitmq_access_layer\ims_rabbitmq_access_layer.csproj", "{96D5BB50-1C46-4B3A-9EF4-5E0FB3D78D8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ims_api", "InventoryManagementSystem\ims_api\ims_api.csproj", "{44970452-FCBB-4C76-8CFD-DFA41A42D0A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims_api", "InventoryManagementSystem\ims_api\ims_api.csproj", "{44970452-FCBB-4C76-8CFD-DFA41A42D0A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventorymanagementservice
+  template:
+    metadata:
+      labels:
+        app: inventorymanagementservice
+    spec:
+      containers:
+        - name: inventorymanagementservice
+          image: larsvandriel/inventorymanagementsystem:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: inventorymanagementservice
+  ports:
+  - name: inventorymanagementservice
+    protocol: TCP
+    port: 80
+    targetPort: 80

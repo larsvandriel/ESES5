@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: productmanagementservice
-          image: larsvandriel/productmanagementservice:latest
+          image: larsvandriel/productmanagementsystem:latest
 ---
 apiVersion: v1
 kind: Service
