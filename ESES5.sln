@@ -5,13 +5,33 @@ VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ProductManagementSystem", "ProductManagementSystem", "{A4782812-F95F-4D8C-A98E-B88CA03E012B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pms_logic", "ProductManagementSystem\pms_logic\pms_logic.csproj", "{43812E4E-22DB-44B0-B906-4FC828027DD2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pms_logic", "ProductManagementSystem\pms_logic\pms_logic.csproj", "{43812E4E-22DB-44B0-B906-4FC828027DD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pms_dal", "ProductManagementSystem\pms_dal\pms_dal.csproj", "{37D5D691-286A-444F-907A-83DBB725F381}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pms_dal", "ProductManagementSystem\pms_dal\pms_dal.csproj", "{37D5D691-286A-444F-907A-83DBB725F381}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pms_rabbitmq_access_layer", "ProductManagementSystem\pms_rabbitmq_access_layer\pms_rabbitmq_access_layer.csproj", "{A87F458B-61C0-4452-B73E-E294B5DA5E5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pms_rabbitmq_access_layer", "ProductManagementSystem\pms_rabbitmq_access_layer\pms_rabbitmq_access_layer.csproj", "{A87F458B-61C0-4452-B73E-E294B5DA5E5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pms_api", "ProductManagementSystem\pms_api\pms_api.csproj", "{CD9AF0D4-7769-4EF6-9506-D0175702A664}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pms_api", "ProductManagementSystem\pms_api\pms_api.csproj", "{CD9AF0D4-7769-4EF6-9506-D0175702A664}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8S", "K8S", "{352D6913-4C35-4E01-BA12-7039BB4B86E0}"
+	ProjectSection(SolutionItems) = preProject
+		ingress-srv.yaml = ingress-srv.yaml
+		inventory-depl.yaml = inventory-depl.yaml
+		local-pvc.yaml = local-pvc.yaml
+		mssql-product-depl.yaml = mssql-product-depl.yaml
+		product-depl.yaml = product-depl.yaml
+		rabbitmq-depl.yaml = rabbitmq-depl.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InventoryManagementSystem", "InventoryManagementSystem", "{A47BEE60-8BF8-4E9A-AC9F-BAF84AD9EEC9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims_logic", "InventoryManagementSystem\ims_logic\ims_logic.csproj", "{68EC7FE4-C868-447C-AB19-376320A27F65}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims_dal", "InventoryManagementSystem\ims_dal\ims_dal.csproj", "{EFA414E8-0A2E-4D6E-A8C4-99B8E2C58D88}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims_rabbitmq_access_layer", "InventoryManagementSystem\ims_rabbitmq_access_layer\ims_rabbitmq_access_layer.csproj", "{96D5BB50-1C46-4B3A-9EF4-5E0FB3D78D8E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims_api", "InventoryManagementSystem\ims_api\ims_api.csproj", "{44970452-FCBB-4C76-8CFD-DFA41A42D0A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +55,22 @@ Global
 		{CD9AF0D4-7769-4EF6-9506-D0175702A664}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD9AF0D4-7769-4EF6-9506-D0175702A664}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD9AF0D4-7769-4EF6-9506-D0175702A664}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68EC7FE4-C868-447C-AB19-376320A27F65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68EC7FE4-C868-447C-AB19-376320A27F65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68EC7FE4-C868-447C-AB19-376320A27F65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68EC7FE4-C868-447C-AB19-376320A27F65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFA414E8-0A2E-4D6E-A8C4-99B8E2C58D88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFA414E8-0A2E-4D6E-A8C4-99B8E2C58D88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFA414E8-0A2E-4D6E-A8C4-99B8E2C58D88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFA414E8-0A2E-4D6E-A8C4-99B8E2C58D88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96D5BB50-1C46-4B3A-9EF4-5E0FB3D78D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96D5BB50-1C46-4B3A-9EF4-5E0FB3D78D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96D5BB50-1C46-4B3A-9EF4-5E0FB3D78D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96D5BB50-1C46-4B3A-9EF4-5E0FB3D78D8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44970452-FCBB-4C76-8CFD-DFA41A42D0A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44970452-FCBB-4C76-8CFD-DFA41A42D0A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44970452-FCBB-4C76-8CFD-DFA41A42D0A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44970452-FCBB-4C76-8CFD-DFA41A42D0A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +80,10 @@ Global
 		{37D5D691-286A-444F-907A-83DBB725F381} = {A4782812-F95F-4D8C-A98E-B88CA03E012B}
 		{A87F458B-61C0-4452-B73E-E294B5DA5E5A} = {A4782812-F95F-4D8C-A98E-B88CA03E012B}
 		{CD9AF0D4-7769-4EF6-9506-D0175702A664} = {A4782812-F95F-4D8C-A98E-B88CA03E012B}
+		{68EC7FE4-C868-447C-AB19-376320A27F65} = {A47BEE60-8BF8-4E9A-AC9F-BAF84AD9EEC9}
+		{EFA414E8-0A2E-4D6E-A8C4-99B8E2C58D88} = {A47BEE60-8BF8-4E9A-AC9F-BAF84AD9EEC9}
+		{96D5BB50-1C46-4B3A-9EF4-5E0FB3D78D8E} = {A47BEE60-8BF8-4E9A-AC9F-BAF84AD9EEC9}
+		{44970452-FCBB-4C76-8CFD-DFA41A42D0A0} = {A47BEE60-8BF8-4E9A-AC9F-BAF84AD9EEC9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D5243F1C-2D28-4721-B160-93E2B88B4852}
