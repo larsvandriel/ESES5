@@ -14,4 +14,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\oms_dal\oms_dal.csproj" />
+    <ProjectReference Include="..\oms_logic\oms_logic.csproj" />
+    <ProjectReference Include="..\oms_rabbitmq_access_layer\oms_rabbitmq_access_layer.csproj" />
+  </ItemGroup>
+
 </Project>
