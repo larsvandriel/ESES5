@@ -33,6 +33,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims_rabbitmq_access_layer",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims_api", "InventoryManagementSystem\ims_api\ims_api.csproj", "{44970452-FCBB-4C76-8CFD-DFA41A42D0A0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderManagementSystem", "OrderManagementSystem", "{0FB2EE00-1CCF-4F7D-9ED6-B61E28E6B37D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oms_logic", "OrderManagementSystem\oms_logic\oms_logic.csproj", "{70EB9ABE-AB96-4E40-81D2-ADC838088339}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oms_dal", "OrderManagementSystem\oms_dal\oms_dal.csproj", "{2CCE4C7C-7D95-4277-A76C-1611FB628F26}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oms_rabbitmq_access_layer", "OrderManagementSystem\oms_rabbitmq_access_layer\oms_rabbitmq_access_layer.csproj", "{79A3A1EF-9774-4676-96FE-164A06D45ADF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oms_api", "OrderManagementSystem\oms_api\oms_api.csproj", "{7643EEB5-9B88-4EB1-BD4C-F1DFC8E1ACD6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +81,22 @@ Global
 		{44970452-FCBB-4C76-8CFD-DFA41A42D0A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44970452-FCBB-4C76-8CFD-DFA41A42D0A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44970452-FCBB-4C76-8CFD-DFA41A42D0A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70EB9ABE-AB96-4E40-81D2-ADC838088339}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70EB9ABE-AB96-4E40-81D2-ADC838088339}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70EB9ABE-AB96-4E40-81D2-ADC838088339}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70EB9ABE-AB96-4E40-81D2-ADC838088339}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CCE4C7C-7D95-4277-A76C-1611FB628F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CCE4C7C-7D95-4277-A76C-1611FB628F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CCE4C7C-7D95-4277-A76C-1611FB628F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CCE4C7C-7D95-4277-A76C-1611FB628F26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79A3A1EF-9774-4676-96FE-164A06D45ADF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79A3A1EF-9774-4676-96FE-164A06D45ADF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79A3A1EF-9774-4676-96FE-164A06D45ADF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79A3A1EF-9774-4676-96FE-164A06D45ADF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7643EEB5-9B88-4EB1-BD4C-F1DFC8E1ACD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7643EEB5-9B88-4EB1-BD4C-F1DFC8E1ACD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7643EEB5-9B88-4EB1-BD4C-F1DFC8E1ACD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7643EEB5-9B88-4EB1-BD4C-F1DFC8E1ACD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +110,10 @@ Global
 		{EFA414E8-0A2E-4D6E-A8C4-99B8E2C58D88} = {A47BEE60-8BF8-4E9A-AC9F-BAF84AD9EEC9}
 		{96D5BB50-1C46-4B3A-9EF4-5E0FB3D78D8E} = {A47BEE60-8BF8-4E9A-AC9F-BAF84AD9EEC9}
 		{44970452-FCBB-4C76-8CFD-DFA41A42D0A0} = {A47BEE60-8BF8-4E9A-AC9F-BAF84AD9EEC9}
+		{70EB9ABE-AB96-4E40-81D2-ADC838088339} = {0FB2EE00-1CCF-4F7D-9ED6-B61E28E6B37D}
+		{2CCE4C7C-7D95-4277-A76C-1611FB628F26} = {0FB2EE00-1CCF-4F7D-9ED6-B61E28E6B37D}
+		{79A3A1EF-9774-4676-96FE-164A06D45ADF} = {0FB2EE00-1CCF-4F7D-9ED6-B61E28E6B37D}
+		{7643EEB5-9B88-4EB1-BD4C-F1DFC8E1ACD6} = {0FB2EE00-1CCF-4F7D-9ED6-B61E28E6B37D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D5243F1C-2D28-4721-B160-93E2B88B4852}
