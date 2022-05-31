@@ -1,0 +1,27 @@
+<h1>Product</h1>
+<button type="button" [routerLink]="['', 'product']" class="btn btn-primary">Back</button>
+<div *ngIf="getContentLoaded()" class="container-fluid">
+  <table>
+    <tbody>
+    <tr>
+      <td>
+        Name
+      </td>
+      <td>
+        {{getProduct().name}}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Amount in Stock
+      </td>
+      <td>
+        {{getProduct().amountInStorage}}
+      </td>
+    </tr>
+    </tbody>
+  </table>
+  <button type="button" [routerLink]="['edit']" class="btn btn-warning">Edit</button>
+  <button type="button" (click)="deleteProduct(getProduct().id)" class="btn btn-danger">Delete</button>
+  <button type="button" (click)="orderProduct()" class="btn btn-primary">Order Product</button>
+</div>
