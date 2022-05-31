@@ -1,0 +1,37 @@
+<div class="row">
+  <h2 class="col-md-9 text-left">Products</h2>
+  <button type="button" class="btn btn-primary" routerLink="create">Create</button>
+</div>
+
+<div *ngIf="getContentLoaded()">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Items in Stock
+      </th>
+      <th>
+
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of getProducts()" (click)="navigateToProductDetails(product.id)">
+      <td>
+        {{product.name}}
+      </td>
+      <td>
+        {{product.amountInStorage}}
+      </td>
+      <td>
+        <button type="button" [routerLink]="[product.id, 'edit']" class="btn btn-warning">Edit</button>
+        <button type="button" (click)="deleteProduct(product.id)" class="btn btn-danger">Delete</button>
+        <button type="button" (click)="orderProduct(product)" class="btn btn-primary">Order</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
