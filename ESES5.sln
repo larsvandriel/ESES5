@@ -35,13 +35,33 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ims_api", "InventoryManagem
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderManagementSystem", "OrderManagementSystem", "{0FB2EE00-1CCF-4F7D-9ED6-B61E28E6B37D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oms_logic", "OrderManagementSystem\oms_logic\oms_logic.csproj", "{70EB9ABE-AB96-4E40-81D2-ADC838088339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "oms_logic", "OrderManagementSystem\oms_logic\oms_logic.csproj", "{70EB9ABE-AB96-4E40-81D2-ADC838088339}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oms_dal", "OrderManagementSystem\oms_dal\oms_dal.csproj", "{2CCE4C7C-7D95-4277-A76C-1611FB628F26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "oms_dal", "OrderManagementSystem\oms_dal\oms_dal.csproj", "{2CCE4C7C-7D95-4277-A76C-1611FB628F26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oms_rabbitmq_access_layer", "OrderManagementSystem\oms_rabbitmq_access_layer\oms_rabbitmq_access_layer.csproj", "{79A3A1EF-9774-4676-96FE-164A06D45ADF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "oms_rabbitmq_access_layer", "OrderManagementSystem\oms_rabbitmq_access_layer\oms_rabbitmq_access_layer.csproj", "{79A3A1EF-9774-4676-96FE-164A06D45ADF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oms_api", "OrderManagementSystem\oms_api\oms_api.csproj", "{7643EEB5-9B88-4EB1-BD4C-F1DFC8E1ACD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "oms_api", "OrderManagementSystem\oms_api\oms_api.csproj", "{7643EEB5-9B88-4EB1-BD4C-F1DFC8E1ACD6}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "frontend", "frontend\", "{C0E0BD2D-3CD3-4BD1-9D51-81D3696C4276}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_52773"
+		Debug.AspNetCompiler.PhysicalPath = "frontend\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52773\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_52773"
+		Release.AspNetCompiler.PhysicalPath = "frontend\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52773\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "52773"
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +117,10 @@ Global
 		{7643EEB5-9B88-4EB1-BD4C-F1DFC8E1ACD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7643EEB5-9B88-4EB1-BD4C-F1DFC8E1ACD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7643EEB5-9B88-4EB1-BD4C-F1DFC8E1ACD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0E0BD2D-3CD3-4BD1-9D51-81D3696C4276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E0BD2D-3CD3-4BD1-9D51-81D3696C4276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0E0BD2D-3CD3-4BD1-9D51-81D3696C4276}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E0BD2D-3CD3-4BD1-9D51-81D3696C4276}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
