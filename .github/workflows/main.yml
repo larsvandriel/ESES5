@@ -1,0 +1,241 @@
+name: BuildAndPublish
+
+on:
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main, development ]
+  workflow_dispatch:
+  
+jobs:
+  build_and_test_ProductManagmentSystem:
+    name: Build and Test ProductManagementSystem
+    runs-on: windows-2022
+    
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0'
+      
+      - name: Install dependencies
+        run: dotnet restore
+        working-directory: ./ProductManagementSystem/pms_api
+      
+      - name: Build
+        run: dotnet build
+        working-directory: ./ProductManagementSystem/pms_api
+        
+      - name: Test
+        run: dotnet test
+        working-directory: ./ProductManagementSystem/pms_test
+        
+  build_and_test_InventoryManagmentSystem:
+    name: Build and Test InventoryManagementSystem
+    runs-on: windows-2022
+    
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0'
+      
+      - name: Install dependencies
+        run: dotnet restore
+        working-directory: ./InventoryManagementSystem/ims_api
+      
+      - name: Build
+        run: dotnet build
+        working-directory: ./InventoryManagementSystem/ims_api
+        
+      - name: Test
+        run: dotnet test
+        working-directory: ./InventoryManagementSystem/ims_test
+  
+  build_and_test_OrderManagmentSystem:
+    name: Build and Test OrderManagementSystem
+    runs-on: windows-2022
+    
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0'
+      
+      - name: Install dependencies
+        run: dotnet restore
+        working-directory: ./OrderManagementSystem/oms_api
+      
+      - name: Build
+        run: dotnet build
+        working-directory: ./OrderManagementSystem/oms_api
+        
+      - name: Test
+        run: dotnet test
+        working-directory: ./OrderManagementSystem/oms_test
+        
+  build_frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./frontend
+      
+      - name: Install Angular
+        run: npm install -g @angular/cli
+        
+      - name: Build
+        run: ng build
+        working-directory: ./frontend
+        
+  sonarcloud_ProductManagementSystem:
+    name: SonarCloud ProductManagementSystem
+    needs: build_and_test_ProductManagmentSystem
+    runs-on: windows-latest
+    steps:
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache SonarCloud scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v1
+        with:
+          path: .\.sonar\scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+      - name: Install SonarCloud scanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          New-Item -Path .\.sonar\scanner -ItemType Directory
+          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_PMS }}
+        shell: powershell
+        run: |
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"larsvandriel_ESES5_PMS" /o:"larsvandriel" /d:sonar.login="${{ secrets.SONAR_TOKEN_PMS }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet build .\ProductManagementSystem\pms_api
+          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_PMS }}"
+        
+  sonarcloud_InventoryManagementSystem:
+    name: SonarCloud InventoryManagementSystem
+    needs: build_and_test_InventoryManagmentSystem
+    runs-on: windows-latest
+    steps:
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache SonarCloud scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v1
+        with:
+          path: .\.sonar\scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+      - name: Install SonarCloud scanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          New-Item -Path .\.sonar\scanner -ItemType Directory
+          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_IMS }}
+        shell: powershell
+        run: |
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"larsvandriel_ESES5_IMS" /o:"larsvandriel" /d:sonar.login="${{ secrets.SONAR_TOKEN_IMS }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet build .\InventoryManagementSystem\ims_api
+          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_IMS }}"
+        
+  sonarcloud_OrderManagementSystem:
+    name: SonarCloud OrderManagementSystem
+    needs: build_and_test_OrderManagmentSystem
+    runs-on: windows-latest
+    steps:
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.11
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache SonarCloud scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v1
+        with:
+          path: .\.sonar\scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
+      - name: Install SonarCloud scanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          New-Item -Path .\.sonar\scanner -ItemType Directory
+          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_OMS }}
+        shell: powershell
+        run: |
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"larsvandriel_ESES5_OMS" /o:"larsvandriel" /d:sonar.login="${{ secrets.SONAR_TOKEN_OMS }}" /d:sonar.host.url="https://sonarcloud.io"
+          dotnet build .\OrderManagementSystem\oms_api
+          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN_OMS }}"
+  
+  sonarcloud_frontend:
+    name: SonarCloud Frontend
+    needs: build_frontend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
