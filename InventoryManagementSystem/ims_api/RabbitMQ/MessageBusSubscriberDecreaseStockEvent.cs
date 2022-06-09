@@ -29,7 +29,7 @@ namespace InventoryManagementSystem.API.RabbitMQ
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
-            _channel.ExchangeDeclare(exchange: "trigger", type: ExchangeType.Fanout);
+            _channel.ExchangeDeclare(exchange: "trigger", type: ExchangeType.Direct);
             _queueName = _channel.QueueDeclare().QueueName;
             _channel.QueueBind(queue: _queueName,
                 exchange: "trigger",
@@ -55,7 +55,7 @@ namespace InventoryManagementSystem.API.RabbitMQ
 
                 using (var scope = _scopeFactory.CreateScope())
                 {
-                    var inventoryManager = scope.ServiceProvider.GetRequiredService<InventoryManager>();
+                    var inventoryManager = scope.ServiceProvider.GetRequiredService<IInventoryManager>();
 
                     var decreaseStockEventDto = JsonSerializer.Deserialize<DecreaseStockEventDto>(notificationMassage);
 
