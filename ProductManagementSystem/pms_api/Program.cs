@@ -23,6 +23,8 @@ builder.Services.Configure<IISOptions>(options =>
 ConfigurationManager config = builder.Configuration;
 var connectionString = config["mssqlconnection:connectionString"];
 
+Console.WriteLine(connectionString);
+
 builder.Services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddHostedService<MessageBusSubscriberUpdateStockEvent>();
