@@ -28,11 +28,11 @@ namespace ProductManagementSystem.API.RabbitMQ
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
-            _channel.ExchangeDeclare(exchange: "trigger", type: ExchangeType.Fanout);
+            _channel.ExchangeDeclare(exchange: "trigger", type: ExchangeType.Direct);
             _queueName = _channel.QueueDeclare().QueueName;
             _channel.QueueBind(queue: _queueName,
                 exchange: "trigger",
-                routingKey: "DecreaseStockEvent");
+                routingKey: "UpdateStockEvent");
 
             Console.WriteLine("--> Listening on the Message Bus...");
 
@@ -54,7 +54,7 @@ namespace ProductManagementSystem.API.RabbitMQ
 
                 using (var scope = _scopeFactory.CreateScope())
                 {
-                    var productManager = scope.ServiceProvider.GetRequiredService<ProductManager>();
+                    var productManager = scope.ServiceProvider.GetRequiredService<IProductManager>();
 
                     var product = JsonSerializer.Deserialize<Product>(notificationMassage);
 

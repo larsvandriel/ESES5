@@ -31,6 +31,7 @@ namespace InventoryManagementSystem.Logic
             }
             product.AmountInStorage -= amountToDecrease;
             Repository.UpdateProduct(product);
+            EventSender.SendUpdateStockEvent(product);
         }
 
         public void DecreaseStorage(Guid orderId, Guid productId, int amountToDecrease)
@@ -43,6 +44,7 @@ namespace InventoryManagementSystem.Logic
             }
             product.AmountInStorage -= amountToDecrease;
             Repository.UpdateProduct(product);
+            EventSender.SendUpdateStockEvent(product);
             EventSender.SendOrderApprovedEvent(orderId);
         }
 
@@ -51,6 +53,7 @@ namespace InventoryManagementSystem.Logic
             Product product = Repository.GetProductById(productId);
             product.AmountInStorage += amountToIncrease;
             Repository.UpdateProduct(product);
+            EventSender.SendUpdateStockEvent(product);
         }
 
         public void RemoveProduct(Product product)
