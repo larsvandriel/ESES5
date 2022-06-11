@@ -45,7 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "oms_api", "OrderManagementS
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "frontend", "frontend\", "{C0E0BD2D-3CD3-4BD1-9D51-81D3696C4276}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_52773"
 		Debug.AspNetCompiler.PhysicalPath = "frontend\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52773\"
@@ -63,6 +63,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "frontend", "frontend\", "{C
 		VWDPort = "52773"
 		SlnRelativePath = "frontend\"
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{867EFB1B-A37E-449D-AE89-718EEA801B85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api_gateway", "Gateway\api_gateway\api_gateway.csproj", "{BA04B166-CE21-42E5-9A19-079497A718A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -122,6 +126,10 @@ Global
 		{C0E0BD2D-3CD3-4BD1-9D51-81D3696C4276}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0E0BD2D-3CD3-4BD1-9D51-81D3696C4276}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{C0E0BD2D-3CD3-4BD1-9D51-81D3696C4276}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{BA04B166-CE21-42E5-9A19-079497A718A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA04B166-CE21-42E5-9A19-079497A718A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA04B166-CE21-42E5-9A19-079497A718A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA04B166-CE21-42E5-9A19-079497A718A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,6 +147,7 @@ Global
 		{2CCE4C7C-7D95-4277-A76C-1611FB628F26} = {0FB2EE00-1CCF-4F7D-9ED6-B61E28E6B37D}
 		{79A3A1EF-9774-4676-96FE-164A06D45ADF} = {0FB2EE00-1CCF-4F7D-9ED6-B61E28E6B37D}
 		{7643EEB5-9B88-4EB1-BD4C-F1DFC8E1ACD6} = {0FB2EE00-1CCF-4F7D-9ED6-B61E28E6B37D}
+		{BA04B166-CE21-42E5-9A19-079497A718A9} = {867EFB1B-A37E-449D-AE89-718EEA801B85}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D5243F1C-2D28-4721-B160-93E2B88B4852}
