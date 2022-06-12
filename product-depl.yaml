@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: productmanagementservice
+  template:
+    metadata:
+      labels:
+        app: productmanagementservice
+    spec:
+      containers:
+        - name: productmanagementservice
+          image: larsvandriel/productmanagementsystem:latest
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: productmanagementservice
+  ports:
+  - name: productmanagementservice
+    protocol: TCP
+    port: 80
+    targetPort: 80
