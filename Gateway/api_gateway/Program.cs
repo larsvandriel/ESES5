@@ -6,6 +6,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("ocelot.json");
 
 // Add services to the container.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+
 builder.Services.AddOcelot();
 
 builder.Services.AddControllers();
@@ -21,6 +27,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("CorsPolicy");
 
 app.UseOcelot();
 
