@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+    name: "eses5cluster-3ba9"
+    labels:
+        app: "eses5cluster-3ba9"
+    annotations:
+        kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+    rules:
+        - host: eses5cluster4df3-eses5cluster-3ba9.5561cbd6b1e34c7a88ac.uksouth.aksapp.io
+          http:
+            paths:
+            - path: /
+              backend:
+                serviceName: "eses5cluster-3ba9"
+                servicePort: 4200
