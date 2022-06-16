@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "eses5cluster-3b34"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "eses5cluster-3b34"
+  template:
+    metadata:
+      labels:
+        app: "eses5cluster-3b34"
+    spec:
+      containers:
+        - name: "eses5cluster-3b34"
+          image: "eses5registry.azurecr.io/eses5cluster"
+          ports:
+          - containerPort: 4200
