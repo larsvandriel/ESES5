@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: "eses5cluster-b6fa"
+    labels:
+        app: "eses5cluster-b6fa"
+spec:
+    type: ClusterIP
+    ports:
+    - port: 4200
+      targetPort: 4200
+      protocol: TCP
+      name: http
+    selector:
+        app: "eses5cluster-b6fa"
