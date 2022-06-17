@@ -6,8 +6,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "product-clusterip-srv",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Product",
@@ -25,14 +25,14 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "product-clusterip-srv",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Product",
       "UpstreamHttpMethod": [ "POST" ],
       "RouteClaimsRequirement": {
-        "Role": [ "Admin" ]
+        //"Role": [ "Admin" ]
       },
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "TestKey",
@@ -44,8 +44,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "product-clusterip-srv",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Product/{everything}",
@@ -56,14 +56,14 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5001
+          "Host": "product-clusterip-srv",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Product/{everything}",
       "UpstreamHttpMethod": [ "PUT", "DELETE" ],
       "RouteClaimsRequirement": {
-        "Role": [ "Admin" ]
+        //"Role": [ "Admin" ]
       }
     },
     //InventoryManagementSystem
@@ -72,14 +72,14 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5002
+          "Host": "inventory-clusterip-srv",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Inventory/{everything}",
       "UpstreamHttpMethod": [ "PATCH" ],
       "RouteClaimsRequirement": {
-        "Role": [ "Admin" ]
+        //"Role": [ "Admin" ]
       }
     },
     //OrderManagementSystem
@@ -88,14 +88,14 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5003
+          "Host": "order-clusterip-srv",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/Order",
       "UpstreamHttpMethod": [ "POST" ],
       "RouteClaimsRequirement": {
-        "Role": [ "Admin", "User" ]
+        //"Role": [ "Admin", "User" ]
       }
     },
     //AuthenticationService
@@ -104,8 +104,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5004
+          "Host": "authservice-clusterip-srv",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/login",
@@ -116,8 +116,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5004
+          "Host": "authservice-clusterip-srv",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/register",
@@ -128,8 +128,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5004
+          "Host": "authservice-clusterip-srv",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/register-admin",
@@ -137,6 +137,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "http://localhost:5000"
+    "BaseUrl": "http://lvd.com"
   }
 }

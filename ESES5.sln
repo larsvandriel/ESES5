@@ -15,12 +15,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pms_api", "ProductManagemen
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8S", "K8S", "{352D6913-4C35-4E01-BA12-7039BB4B86E0}"
 	ProjectSection(SolutionItems) = preProject
+		apigateway-depl.yaml = apigateway-depl.yaml
+		authservice-depl.yaml = authservice-depl.yaml
 		ingress-srv.yaml = ingress-srv.yaml
 		inventory-depl.yaml = inventory-depl.yaml
 		local-pvc.yaml = local-pvc.yaml
-		mssql-product-depl.yaml = mssql-product-depl.yaml
+		mssql-depl.yaml = mssql-depl.yaml
+		order-depl.yaml = order-depl.yaml
 		product-depl.yaml = product-depl.yaml
+		publish_to_docker.bat = publish_to_docker.bat
 		rabbitmq-depl.yaml = rabbitmq-depl.yaml
+		restart_kubernetes_deployments.bat = restart_kubernetes_deployments.bat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InventoryManagementSystem", "InventoryManagementSystem", "{A47BEE60-8BF8-4E9A-AC9F-BAF84AD9EEC9}"
@@ -70,7 +75,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api_gateway", "Gateway\api_
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthenticationService", "AuthenticationService", "{D128A90E-1708-4ED9-B771-223293D9C2D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "auth_service", "AuthenticationService\auth_service\auth_service.csproj", "{28BF1B16-9022-460B-9FFD-FB42EF965F59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "auth_service", "AuthenticationService\auth_service\auth_service.csproj", "{28BF1B16-9022-460B-9FFD-FB42EF965F59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
