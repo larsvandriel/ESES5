@@ -11,7 +11,33 @@
         }
       ],
       "UpstreamPathTemplate": "/Product",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamHttpMethod": [ "GET" ],
+      "RouteClaimsRequirement": {
+        //"role": "admin" 
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Product",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/Product",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RouteClaimsRequirement": {
+        "Role": [ "Admin" ]
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/Product/{everything}",
@@ -23,7 +49,22 @@
         }
       ],
       "UpstreamPathTemplate": "/Product/{everything}",
-      "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ]
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Product/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5001
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/{everything}",
+      "UpstreamHttpMethod": [ "PUT", "DELETE" ],
+      "RouteClaimsRequirement": {
+        "Role": [ "Admin" ]
+      }
     },
     //InventoryManagementSystem
     {
@@ -36,7 +77,10 @@
         }
       ],
       "UpstreamPathTemplate": "/Inventory/{everything}",
-      "UpstreamHttpMethod": [ "PATCH" ]
+      "UpstreamHttpMethod": [ "PATCH" ],
+      "RouteClaimsRequirement": {
+        "Role": [ "Admin" ]
+      }
     },
     //OrderManagementSystem
     {
@@ -49,7 +93,10 @@
         }
       ],
       "UpstreamPathTemplate": "/Order",
-      "UpstreamHttpMethod": [ "POST" ]
+      "UpstreamHttpMethod": [ "POST" ],
+      "RouteClaimsRequirement": {
+        "Role": [ "Admin", "User" ]
+      }
     },
     //AuthenticationService
     {
@@ -74,6 +121,18 @@
         }
       ],
       "UpstreamPathTemplate": "/register",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Authenticate/register-admin",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5004
+        }
+      ],
+      "UpstreamPathTemplate": "/register-admin",
       "UpstreamHttpMethod": [ "POST" ]
     }
   ],

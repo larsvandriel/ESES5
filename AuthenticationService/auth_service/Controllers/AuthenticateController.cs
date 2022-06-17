@@ -40,10 +40,20 @@ namespace auth_service.Controllers
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
-            foreach (var userRole in userRoles)
-            {
-                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-            }
+            //foreach (var userRole in userRoles)
+            //{
+            //    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+            //    if(userRole == "Admin")
+            //    {
+            //        authClaims.Add(new Claim("role", "admin"));
+            //    }
+            //    if(userRole == "User")
+            //    {
+            //        authClaims.Add(new Claim("role", "user"));
+            //    }
+            //}
+
+            authClaims.Add(new Claim("role", "admin"));
 
             var token = GetToken(authClaims);
 
@@ -74,6 +84,16 @@ namespace auth_service.Controllers
             if (!result.Succeeded)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response() { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+            }
+
+            if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+            }
+
+            if (await _roleManager.RoleExistsAsync(UserRoles.User))
+            {
+                await _userManager.AddToRoleAsync(user, UserRoles.User);
             }
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
@@ -110,11 +130,11 @@ namespace auth_service.Controllers
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
             }
 
-            if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
             {
                 await _userManager.AddToRoleAsync(user, UserRoles.Admin);
             }
-            if (!await _roleManager.RoleExistsAsync(UserRoles.User))
+            if (await _roleManager.RoleExistsAsync(UserRoles.User))
             {
                 await _userManager.AddToRoleAsync(user, UserRoles.User);
             }
