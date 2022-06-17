@@ -15,7 +15,7 @@ export class OrderService {
   createOrder(order: Order): Observable<any> {
     const url = this.baseUrl + 'order';
     const body = JSON.stringify(order);
-    const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + sessionStorage.getItem("Token")})};
     return this.httpClient.post(url, body, httpOptions);
   }
 

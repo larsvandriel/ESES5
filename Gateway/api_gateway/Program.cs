@@ -1,5 +1,7 @@
+using Microsoft.IdentityModel.Tokens;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +12,16 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
         builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+
+builder.Services.AddAuthentication().AddJwtBearer("TestKey", x =>
+{
+    x.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateAudience=false,
+        ValidateIssuer=false,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("JWTAuthenticationHIGHsecuredPasswordVVVp1OH7xzyr"))
+    };
 });
 
 builder.Services.AddOcelot();

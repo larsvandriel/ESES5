@@ -14,30 +14,33 @@ export class ProductService {
 
   getAllProducts(): Observable<any> {
     const url = this.baseUrl + 'product';
-    return this.httpClient.get(url);
+    const httpOptions = {headers: new HttpHeaders({'Authorization': 'Bearer ' + sessionStorage.getItem("Token")})};
+    return this.httpClient.get(url, httpOptions);
   }
 
   getProduct(productId: string): Observable<any> {
     const url = this.baseUrl + 'product/' + productId;
-    return this.httpClient.get(url);
+    const httpOptions = {headers: new HttpHeaders({'Authorization': 'Bearer ' + sessionStorage.getItem("Token")})};
+    return this.httpClient.get(url, httpOptions);
   }
 
   deleteProduct(productId: string): Observable<any> {
     const url = this.baseUrl + 'product/' + productId;
-    return this.httpClient.delete(url);
+    const httpOptions = {headers: new HttpHeaders({'Authorization': 'Bearer ' + sessionStorage.getItem("Token")})};
+    return this.httpClient.delete(url, httpOptions);
   }
 
   createProduct(product: Product): Observable<any> {
     const url = this.baseUrl + 'product';
     const body = JSON.stringify(product);
-    const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + sessionStorage.getItem("Token")})};
     return this.httpClient.post(url, body, httpOptions);
   }
 
   editProduct(product: Product): Observable<any> {
     const url = this.baseUrl + 'product/' + product.id;
     const body = JSON.stringify(product);
-    const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json'})};
+    const httpOptions = {headers: new HttpHeaders({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + sessionStorage.getItem("Token")})};
     return this.httpClient.put(url, body, httpOptions);
   }
 }
