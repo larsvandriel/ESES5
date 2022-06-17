@@ -10,10 +10,10 @@ spec:
     - host: lvd.com
       http:
         paths:
-          - path: /api/Product
+          - path: /
             pathType: Prefix
             backend:
               service:
-                name: product-clusterip-srv
+                name: apigateway-clusterip-srv
                 port:
                   number: 80
