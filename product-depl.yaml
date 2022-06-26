@@ -14,7 +14,23 @@ spec:
     spec:
       containers:
         - name: productmanagementservice
-          image: larsvandriel/productmanagementsystem:latest
+          image: eses5.azurecr.io/productmanagementsystem:latest
+          env:
+          - name: DB_SERVER
+            valueFrom:
+              secretKeyRef:
+                name: db-conn
+                key: DB_SERVER
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-conn
+                key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-conn
+                key: DB_PASSWORD
 ---
 apiVersion: v1
 kind: Service

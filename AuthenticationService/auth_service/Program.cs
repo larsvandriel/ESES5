@@ -15,11 +15,31 @@ builder.Services.AddCors(options =>
         builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("ConnStr")));
+var connectionString = configuration.GetConnectionString("ConnStr");
+
+if(builder.Environment.IsProduction())
+{
+    var server = Environment.GetEnvironmentVariable("DB_SERVER");
+    var user = Environment.GetEnvironmentVariable("DB_USER");
+    var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
+    connectionString = connectionString.Replace("{DbServer}", server);
+    connectionString = connectionString.Replace("{DbUser}", user);
+    connectionString = connectionString.Replace("{DbPassword}", password);
+}
+
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+var JwtSecret = configuration["JWT:Secret"];
+
+if(builder.Environment.IsProduction())
+{
+    JwtSecret = JwtSecret.Replace("{JwtSecret}", Environment.GetEnvironmentVariable("JWT_SECRET"));
+    configuration["JWT:Secret"] = JwtSecret;
+}
 
 builder.Services.AddAuthentication(options =>
 {
@@ -36,7 +56,7 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidAudience = configuration["JWT:ValidAudience"],
         ValidIssuer = configuration["JWT:ValidIssuer"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtSecret))
     };
 });
 

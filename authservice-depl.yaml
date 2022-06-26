@@ -14,7 +14,28 @@ spec:
     spec:
       containers:
         - name: authservice
-          image: larsvandriel/authservice:latest
+          image: eses5.azurecr.io/authservice:latest
+          env:
+          - name: DB_SERVER
+            valueFrom:
+              secretKeyRef:
+                name: db-conn
+                key: DB_SERVER
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: db-conn
+                key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-conn
+                key: DB_PASSWORD
+          - name: JWT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: jwt
+                key: JWT_SECRET
 ---
 apiVersion: v1
 kind: Service

@@ -23,6 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8S", "K8S", "{352D6913-4C3
 		mssql-depl.yaml = mssql-depl.yaml
 		order-depl.yaml = order-depl.yaml
 		product-depl.yaml = product-depl.yaml
+		publish_to_azure.bat = publish_to_azure.bat
 		publish_to_docker.bat = publish_to_docker.bat
 		rabbitmq-depl.yaml = rabbitmq-depl.yaml
 		restart_kubernetes_deployments.bat = restart_kubernetes_deployments.bat

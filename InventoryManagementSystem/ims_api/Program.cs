@@ -23,6 +23,16 @@ builder.Services.Configure<IISOptions>(options =>
 ConfigurationManager config = builder.Configuration;
 var connectionString = config["mssqlconnection:connectionString"];
 
+if (builder.Environment.IsProduction())
+{
+    var server = Environment.GetEnvironmentVariable("DB_SERVER");
+    var user = Environment.GetEnvironmentVariable("DB_USER");
+    var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
+    connectionString = connectionString.Replace("{DbServer}", server);
+    connectionString = connectionString.Replace("{DbUser}", user);
+    connectionString = connectionString.Replace("{DbPassword}", password);
+}
+
 builder.Services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddHostedService<MessageBusSubscriberDecreaseStockEvent>();
@@ -58,7 +68,6 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions()
 app.UseRouting();
 
 app.UseCors("CorsPolicy");
-
 
 app.UseHttpsRedirection();
 

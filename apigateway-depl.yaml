@@ -14,7 +14,13 @@ spec:
     spec:
       containers:
         - name: apigateway
-          image: larsvandriel/apigateway:latest
+          image: eses5.azurecr.io/apigateway:latest
+          env:
+          - name: JWT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: jwt
+                key: JWT_SECRET
 ---
 apiVersion: v1
 kind: Service
