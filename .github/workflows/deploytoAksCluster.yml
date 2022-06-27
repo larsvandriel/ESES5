@@ -1,0 +1,51 @@
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    
+    - uses: azure/docker-login@v1
+      with:
+        login-server: eses5.azurecr.io
+        username: ${{ secrets.acr_eses5_username }}
+        password: ${{ secrets.acr_eses5_password }}
+    
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/." -f  "AuthenticationService/auth_service/Dockerfile" -t eses5.azurecr.io/eses5cluster:${{ github.sha }} --label dockerfile-path=AuthenticationService/auth_service/Dockerfile
+        docker push eses5.azurecr.io/eses5cluster:${{ github.sha }}
+    
+    - uses: azure/k8s-set-context@v1
+      with:
+         kubeconfig: ${{ secrets.aks_eses5cluster_kubeConfig }}
+      id: login
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep default | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace default`
+        fi
+
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: default
+        container-registry-url: eses5.azurecr.io
+        container-registry-username: ${{ secrets.acr_eses5_username }}
+        container-registry-password: ${{ secrets.acr_eses5_password }}
+        secret-name: eses5clusterdockerauth
+       
+    - uses: azure/k8s-deploy@v1.2
+      with:
+        namespace: default
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+          manifests/ingress.yml
+        images: |
+          eses5.azurecr.io/eses5cluster:${{ github.sha }}
+        imagepullsecrets: |
+          eses5clusterdockerauth
