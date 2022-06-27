@@ -43,17 +43,19 @@ namespace auth_service.Controllers
             //foreach (var userRole in userRoles)
             //{
             //    authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-            //    if(userRole == "Admin")
+            //    if (userRole == "Admin")
             //    {
             //        authClaims.Add(new Claim("role", "admin"));
             //    }
-            //    if(userRole == "User")
+            //    if (userRole == "User")
             //    {
             //        authClaims.Add(new Claim("role", "user"));
             //    }
             //}
 
             authClaims.Add(new Claim("role", "admin"));
+
+            authClaims.Add(new Claim("id", user.Id));
 
             var token = GetToken(authClaims);
 

@@ -21,6 +21,7 @@ namespace OrderManagementSystem.Logic
         {
             Order order = Repository.GetOrder(orderId);
             order.Status = OrderStatus.ACCEPTED;
+            order.TimeOrderHandled = DateTime.Now;
             Repository.UpdateOrder(order);
         }
 
@@ -42,6 +43,7 @@ namespace OrderManagementSystem.Logic
         {
             Order order = Repository.GetOrder(orderId);
             order.Status = OrderStatus.REJECTED;
+            order.TimeOrderHandled = DateTime.Now;
             Repository.UpdateOrder(order);
         }
     }

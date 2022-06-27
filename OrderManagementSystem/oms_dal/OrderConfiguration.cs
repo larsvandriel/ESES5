@@ -15,7 +15,10 @@ namespace OrderManagementSystem.DataAccessLayer
         {
             builder.HasKey(o => o.Id);
             builder.Property(o => o.ProductId).IsRequired();
+            builder.Property(o => o.UserId).IsRequired();
             builder.Property(o => o.Status).IsRequired();
+            builder.Property(o => o.TimeOrderCreated).IsRequired();
+            builder.Property(o => o.TimeOrderHandled);
         }
     }
 }
