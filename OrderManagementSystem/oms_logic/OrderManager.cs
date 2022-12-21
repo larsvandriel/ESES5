@@ -44,5 +44,19 @@ namespace OrderManagementSystem.Logic
             order.Status = OrderStatus.REJECTED;
             Repository.UpdateOrder(order);
         }
+
+        public void ForgetUser(Guid userId)
+        {
+            foreach (Order order in Repository.GetOrdersFromUser(userId))
+            {
+                order.UserId = Guid.Empty;
+                Repository.UpdateOrder(order);
+            }
+        }
+
+        public List<Order> GetOrdersFromUser(Guid userId)
+        {
+            return Repository.GetOrdersFromUser(userId);
+        }
     }
 }

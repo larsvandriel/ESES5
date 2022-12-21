@@ -1,0 +1,142 @@
+﻿{
+  "Routes": [
+    //ProductManagementSystem
+    {
+      "DownstreamPathTemplate": "/api/Product",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ProductManagementSystem",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Product",
+      "UpstreamHttpMethod": [ "GET" ],
+      "RouteClaimsRequirement": {
+        //"role": "admin" 
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Product",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ProductManagementSystem",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Product",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RouteClaimsRequirement": {
+        //"Role": [ "Admin" ]
+      },
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/Product/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ProductManagementSystem",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/{everything}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Product/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ProductManagementSystem",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Product/{everything}",
+      "UpstreamHttpMethod": [ "PUT", "DELETE" ],
+      "RouteClaimsRequirement": {
+        //"Role": [ "Admin" ]
+      }
+    },
+    //InventoryManagementSystem
+    {
+      "DownstreamPathTemplate": "/api/Inventory/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "InventoryManagementSystem",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Inventory/{everything}",
+      "UpstreamHttpMethod": [ "PATCH" ],
+      "RouteClaimsRequirement": {
+        //"Role": [ "Admin" ]
+      }
+    },
+    //OrderManagementSystem
+    {
+      "DownstreamPathTemplate": "/api/Order",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "OrderManagementSystem",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/Order",
+      "UpstreamHttpMethod": [ "POST" ],
+      "RouteClaimsRequirement": {
+        //"Role": [ "Admin", "User" ]
+      }
+    },
+    //AuthenticationService
+    {
+      "DownstreamPathTemplate": "/api/Authenticate/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "AuthenticationService",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/login",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Authenticate/register",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "AuthenticationService",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/register",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Authenticate/register-admin",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "AuthenticationService",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/register-admin",
+      "UpstreamHttpMethod": [ "POST" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:7000"
+  }
+}

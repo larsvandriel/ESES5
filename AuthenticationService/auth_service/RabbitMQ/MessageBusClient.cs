@@ -1,21 +1,15 @@
-﻿using Microsoft.Extensions.Configuration;
-using ProductManagementSystem.Logic;
-using RabbitMQ.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.AspNetCore.Connections;
 using System.Text.Json;
-using System.Threading.Tasks;
+using System.Text;
+using RabbitMQ.Client;
 
-namespace ProductManagementSystem.RabbitMqAccessLayer
+namespace auth_service.RabbitMQ
 {
-    public class MessageBusClient : IMessageBusClient
+    public class MessageBusClient
     {
         private readonly IConfiguration _configuration;
         private readonly IConnection _connection;
         private readonly IModel _channel;
-
         public MessageBusClient(IConfiguration configuration)
         {
             _configuration = configuration;
@@ -43,37 +37,15 @@ namespace ProductManagementSystem.RabbitMqAccessLayer
                 Console.WriteLine($"--> Could not connect to the Message Bus: {ex.Message}");
             }
         }
-        
-        public void SendProductCreatedEvent(Product product)
-        {
-            var message = JsonSerializer.Serialize(product);
 
-            if(_connection.IsOpen)
-            {
-                Console.WriteLine("--> RabbitMQ Connection Open, sending message...");
-                SendMessage(message, "ProductCreatedEvent");
-            }
-        }
-
-        public void SendProductDeletedEvent(Product product)
+        public void SendUserForgetUserEvent(Guid userId)
         {
-            var message = JsonSerializer.Serialize(product);
+            var message = JsonSerializer.Serialize(userId);
 
             if (_connection.IsOpen)
             {
                 Console.WriteLine("--> RabbitMQ Connection Open, sending message...");
-                SendMessage(message, "ProductDeletedEvent");
-            }
-        }
-
-        public void SendProductUpdatedEvent(Product product)
-        {
-            var message = JsonSerializer.Serialize(product);
-
-            if (_connection.IsOpen)
-            {
-                Console.WriteLine("--> RabbitMQ Connection Open, sending message...");
-                SendMessage(message, "ProductUpdatedEvent");
+                SendMessage(message, "ForgetUserEvent");
             }
         }
 

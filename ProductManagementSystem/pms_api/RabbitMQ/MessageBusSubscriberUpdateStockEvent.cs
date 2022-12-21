@@ -24,7 +24,18 @@ namespace ProductManagementSystem.API.RabbitMQ
 
         private void InitializeRabbitMQ()
         {
-            var factory = new ConnectionFactory() { HostName = _configuration["RabbitMQHost"], Port = int.Parse(_configuration["RabbitMQPort"]) };
+            var factory = new ConnectionFactory()
+            {
+                HostName = _configuration["RabbitMQHost"],
+                Port = int.Parse(_configuration["RabbitMQPort"]),
+                UserName = _configuration["RabbitMQUser"],
+                Password = _configuration["RabbitMQPassword"]
+            };
+
+            Console.WriteLine(factory.HostName);
+            Console.WriteLine(factory.Port);
+            Console.WriteLine(factory.UserName);
+            Console.WriteLine(factory.Password);
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
+using ProductManagementSystem.API.Helpers;
 using ProductManagementSystem.API.RabbitMQ;
 using ProductManagementSystem.DataAccessLayer;
 using ProductManagementSystem.Logic;
@@ -21,7 +22,14 @@ builder.Services.Configure<IISOptions>(options =>
 });
 
 ConfigurationManager config = builder.Configuration;
-var connectionString = config["mssqlconnection:connectionString"];
+
+ConfigurationLoader.LoadConfigurationValue(config, "SqlServer");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQHost");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPort");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQUser");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPassword");
+
+var connectionString = config["SqlServer"];
 
 Console.WriteLine(connectionString);
 

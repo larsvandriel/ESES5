@@ -1,3 +1,4 @@
+using InventoryManagementSystem.API.Helpers;
 using InventoryManagementSystem.API.RabbitMQ;
 using InventoryManagementSystem.DataAccessLayer;
 using InventoryManagementSystem.Logic;
@@ -21,7 +22,22 @@ builder.Services.Configure<IISOptions>(options =>
 });
 
 ConfigurationManager config = builder.Configuration;
-var connectionString = config["mssqlconnection:connectionString"];
+
+ConfigurationLoader.LoadConfigurationValue(config, "SqlServer");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQHost");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPort");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQUser");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPassword");
+
+var connectionString = config["SqlServer"];
+
+Console.WriteLine(connectionString);
+
+Console.WriteLine(config["RabbitMQHost"]);
+Console.WriteLine(config["RabbitMQPort"]);
+Console.WriteLine(config["RabbitMQUser"]);
+Console.WriteLine(config["RabbitMQPassword"]);
+
 
 builder.Services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(connectionString));
 
