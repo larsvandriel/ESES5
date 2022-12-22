@@ -280,8 +280,34 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_FRONTEND }}
 
-  dockerize_ProductManagementSystem:
+  security_ProductManagementSystem:
+    name: Security ProductManagementSystem
     needs: sonarcloud_ProductManagementSystem
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+    
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0'
+      
+      - name: Install dependencies
+        run: dotnet restore
+        working-directory: ./ProductManagementSystem/pms_api
+      
+      - name: Build
+        run: dotnet build
+        working-directory: ./ProductManagementSystem/pms_api
+      
+      - name: ZAP Scan
+        uses: zaproxy/action-api-scan@v0.1.1
+        with:
+          target: 'http://localhost:7000'
+
+  dockerize_ProductManagementSystem:
+    needs: security_ProductManagementSystem
     runs-on: ubuntu-latest
     
     steps:
