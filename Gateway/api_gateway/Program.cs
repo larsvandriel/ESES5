@@ -5,7 +5,17 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Configuration.AddJsonFile("ocelot.json");
+if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+{
+    Console.WriteLine("Running in Development Mode");
+    builder.Configuration.AddJsonFile("ocelot.Development.json");
+}
+else
+{
+    Console.WriteLine("Running in Production Mode");
+    builder.Configuration.AddJsonFile("ocelot.json");
+}
+
 
 // Add services to the container.
 builder.Services.AddCors(options =>

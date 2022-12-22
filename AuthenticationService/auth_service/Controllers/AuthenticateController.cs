@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using auth_service.RabbitMQ;
 
 namespace auth_service.Controllers
 {
@@ -15,12 +16,18 @@ namespace auth_service.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
+        private readonly MessageBusClient _messageBus;
 
         public AuthenticateController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _messageBus = new MessageBusClient(configuration);
+            if (userManager.FindByIdAsync(Guid.Empty.ToString()) != null)
+            {
+                userManager.CreateAsync(new IdentityUser("DELETED_USER"));
+            }
         }
 
         [HttpPost]
@@ -140,6 +147,24 @@ namespace auth_service.Controllers
             }
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+        }
+
+        [HttpDelete]
+        [Route("ForgetMe/{guid}")]
+        public async Task<IActionResult> ForgetMe(Guid guid)
+        {
+            var user = _userManager.FindByIdAsync(guid.ToString()).Result;
+
+            if (user == null)
+            {
+                return BadRequest("User was not found!");
+            }
+
+            _messageBus.SendUserForgetUserEvent(guid);
+
+            _userManager.DeleteAsync(user);
+
+            return Ok("User was successfully deleted!");
         }
 
         private JwtSecurityToken GetToken(List<Claim> authClaims)

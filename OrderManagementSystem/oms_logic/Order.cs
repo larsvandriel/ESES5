@@ -11,5 +11,6 @@ namespace OrderManagementSystem.Logic
         public Guid Id { get; set; }
         public Guid ProductId { get; set; }
         public OrderStatus Status { get; set; }
+        public Guid UserId { get; set; }
     }
 }

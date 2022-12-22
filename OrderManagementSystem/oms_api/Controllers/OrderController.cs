@@ -22,5 +22,11 @@ namespace OrderManagementSystem.API.Controllers
         {
             return OrderManager.CreateOrder(order);
         }
+
+        [HttpGet]
+        public List<Order> GetOrdersByUser(Guid userId)
+        {
+            return OrderManager.GetOrdersFromUser(userId);
+        }
     }
 }

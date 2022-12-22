@@ -34,6 +34,11 @@ namespace OrderManagementSystem.DataAccessLayer
             return RepositoryContext.Set<Order>().First(o => o.Id == id);
         }
 
+        public List<Order> GetOrdersFromUser(Guid userId)
+        {
+            return RepositoryContext.Set<Order>().Where(o => o.UserId.Equals(userId)).ToList();
+        }
+
         public void UpdateOrder(Order order)
         {
             RepositoryContext.Orders.Update(order);

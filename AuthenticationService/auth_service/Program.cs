@@ -4,9 +4,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using auth_service.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
-ConfigurationManager configuration = builder.Configuration;
+ConfigurationManager config = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddCors(options =>
@@ -15,7 +16,15 @@ builder.Services.AddCors(options =>
         builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("ConnStr")));
+ConfigurationLoader.LoadConfigurationValue(config, "SqlServer");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQHost");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPort");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQUser");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPassword");
+
+var connectionString = config["SqlServer"];
+
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -34,9 +43,9 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidAudience = configuration["JWT:ValidAudience"],
-        ValidIssuer = configuration["JWT:ValidIssuer"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
+        ValidAudience = config["JWT:ValidAudience"],
+        ValidIssuer = config["JWT:ValidIssuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JWT:Secret"]))
     };
 });
 

@@ -1,12 +1,12 @@
-﻿using InventoryManagementSystem.Logic;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
+using OrderManagementSystem.Logic;
+using RabbitMQ.Client.Events;
+using RabbitMQ.Client;
 
-namespace InventoryManagementSystem.API.RabbitMQ
+namespace OrderManagementSystem.API.RabbitMQ
 {
-    public class MessageBusSubscriberProductCreatedEvent : BackgroundService
+    public class MessageBusSubscriberForgetUserEvent: BackgroundService
     {
         private readonly IConfiguration _configuration;
         private readonly IServiceScopeFactory _scopeFactory;
@@ -14,7 +14,7 @@ namespace InventoryManagementSystem.API.RabbitMQ
         private IModel _channel;
         private string _queueName;
 
-        public MessageBusSubscriberProductCreatedEvent(IConfiguration configuration, IServiceScopeFactory scopeFactory)
+        public MessageBusSubscriberForgetUserEvent(IConfiguration configuration, IServiceScopeFactory scopeFactory)
         {
             _configuration = configuration;
             _scopeFactory = scopeFactory;
@@ -43,7 +43,7 @@ namespace InventoryManagementSystem.API.RabbitMQ
             _queueName = _channel.QueueDeclare().QueueName;
             _channel.QueueBind(queue: _queueName,
                 exchange: "trigger",
-                routingKey: "ProductCreatedEvent");
+                routingKey: "ForgetUserEvent");
 
             Console.WriteLine("--> Listening on the Message Bus...");
 
@@ -65,11 +65,11 @@ namespace InventoryManagementSystem.API.RabbitMQ
 
                 using (var scope = _scopeFactory.CreateScope())
                 {
-                    var inventoryManager = scope.ServiceProvider.GetRequiredService<IInventoryManager>();
+                    var orderManager = scope.ServiceProvider.GetRequiredService<IOrderManager>();
 
-                    var product = JsonSerializer.Deserialize<Product>(notificationMassage);
+                    var userId = JsonSerializer.Deserialize<Guid>(notificationMassage);
 
-                    inventoryManager.AddProduct(product);
+                    orderManager.ForgetUser(userId);
                 }
             };
 
