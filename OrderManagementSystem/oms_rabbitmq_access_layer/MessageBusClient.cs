@@ -20,7 +20,14 @@ namespace OrderManagementSystem.RabbitMqAccessLayer
         {
             _configuration = configuration;
 
-            var factory = new ConnectionFactory() { HostName = _configuration["RabbitMQHost"], Port = int.Parse(_configuration["RabbitMQPort"])};
+            var factory = new ConnectionFactory()
+            {
+                HostName = _configuration["RabbitMQHost"],
+                Port = int.Parse(_configuration["RabbitMQPort"]),
+                UserName = _configuration["RabbitMQUser"],
+                Password = _configuration["RabbitMQPassword"]
+            };
+
             try
             {
                 _connection = factory.CreateConnection();

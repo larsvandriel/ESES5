@@ -12,5 +12,6 @@ namespace OrderManagementSystem.Logic
         void DeleteOrder(Order order);
         void UpdateOrder(Order order);
         Order GetOrder(Guid id);
+        List<Order> GetOrdersFromUser(Guid userId);
     }
 }

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authservice-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authservice
+  template:
+    metadata:
+      labels:
+        app: authservice
+    spec:
+      containers:
+        - name: authservice
+          image: larsvandriel/authservice:latest
+          env:
+          - name: SqlServer
+            valueFrom:
+              secretKeyRef:
+                name: mssql-auth
+                key: CONN_STRING
+          - name: RabbitMQHost
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-host
+                key: RABBITMQ_HOST
+          - name: RabbitMQPort
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-port
+                key: RABBITMQ_PORT
+          - name: RabbitMQUser
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-user
+                key: RABBITMQ_USER
+          - name: RabbitMQPassword
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-pw
+                key: RABBITMQ_PW
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authservice-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: authservice
+  ports:
+  - name: authservice
+    protocol: TCP
+    port: 80
+    targetPort: 80

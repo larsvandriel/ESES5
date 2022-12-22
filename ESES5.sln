@@ -15,12 +15,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "pms_api", "ProductManagemen
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "K8S", "K8S", "{352D6913-4C35-4E01-BA12-7039BB4B86E0}"
 	ProjectSection(SolutionItems) = preProject
+		apigateway-depl.yaml = apigateway-depl.yaml
+		apply_all_deployment_configs.bat = apply_all_deployment_configs.bat
+		authservice-depl.yaml = authservice-depl.yaml
 		ingress-srv.yaml = ingress-srv.yaml
 		inventory-depl.yaml = inventory-depl.yaml
 		local-pvc.yaml = local-pvc.yaml
-		mssql-product-depl.yaml = mssql-product-depl.yaml
+		mssql-depl.yaml = mssql-depl.yaml
+		order-depl.yaml = order-depl.yaml
 		product-depl.yaml = product-depl.yaml
+		publish_to_docker.bat = publish_to_docker.bat
 		rabbitmq-depl.yaml = rabbitmq-depl.yaml
+		restart_kubernetes_deployments.bat = restart_kubernetes_deployments.bat
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InventoryManagementSystem", "InventoryManagementSystem", "{A47BEE60-8BF8-4E9A-AC9F-BAF84AD9EEC9}"
@@ -45,7 +51,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "oms_api", "OrderManagementS
 EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "frontend", "frontend\", "{C0E0BD2D-3CD3-4BD1-9D51-81D3696C4276}"
 	ProjectSection(WebsiteProperties) = preProject
-		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_52773"
 		Debug.AspNetCompiler.PhysicalPath = "frontend\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_52773\"
@@ -63,6 +69,25 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "frontend", "frontend\", "{C
 		VWDPort = "52773"
 		SlnRelativePath = "frontend\"
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Gateway", "Gateway", "{867EFB1B-A37E-449D-AE89-718EEA801B85}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "api_gateway", "Gateway\api_gateway\api_gateway.csproj", "{BA04B166-CE21-42E5-9A19-079497A718A9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthenticationService", "AuthenticationService", "{D128A90E-1708-4ED9-B771-223293D9C2D1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "auth_service", "AuthenticationService\auth_service\auth_service.csproj", "{28BF1B16-9022-460B-9FFD-FB42EF965F59}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DockerCompose", "DockerCompose", "{DE7E10F0-3BCB-481B-9F62-6FF80AB81392}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yaml = docker-compose.yaml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "auth_logic", "AuthenticationService\auth_logic\auth_logic.csproj", "{B3D7ED48-4337-475C-AC9F-F74C9AAE7AFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "auth_dal", "AuthenticationService\auth_dal\auth_dal.csproj", "{EE971CC6-06AB-464C-B4CD-00307B043275}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "auth_rabbitmq", "AuthenticationService\auth_rabbitmq\auth_rabbitmq.csproj", "{5975FD9A-82D5-49C4-9966-2A6A4D29052B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -122,6 +147,26 @@ Global
 		{C0E0BD2D-3CD3-4BD1-9D51-81D3696C4276}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0E0BD2D-3CD3-4BD1-9D51-81D3696C4276}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{C0E0BD2D-3CD3-4BD1-9D51-81D3696C4276}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{BA04B166-CE21-42E5-9A19-079497A718A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA04B166-CE21-42E5-9A19-079497A718A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA04B166-CE21-42E5-9A19-079497A718A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA04B166-CE21-42E5-9A19-079497A718A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28BF1B16-9022-460B-9FFD-FB42EF965F59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28BF1B16-9022-460B-9FFD-FB42EF965F59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28BF1B16-9022-460B-9FFD-FB42EF965F59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28BF1B16-9022-460B-9FFD-FB42EF965F59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3D7ED48-4337-475C-AC9F-F74C9AAE7AFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3D7ED48-4337-475C-AC9F-F74C9AAE7AFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3D7ED48-4337-475C-AC9F-F74C9AAE7AFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3D7ED48-4337-475C-AC9F-F74C9AAE7AFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE971CC6-06AB-464C-B4CD-00307B043275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE971CC6-06AB-464C-B4CD-00307B043275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE971CC6-06AB-464C-B4CD-00307B043275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE971CC6-06AB-464C-B4CD-00307B043275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5975FD9A-82D5-49C4-9966-2A6A4D29052B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5975FD9A-82D5-49C4-9966-2A6A4D29052B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5975FD9A-82D5-49C4-9966-2A6A4D29052B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5975FD9A-82D5-49C4-9966-2A6A4D29052B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,6 +184,11 @@ Global
 		{2CCE4C7C-7D95-4277-A76C-1611FB628F26} = {0FB2EE00-1CCF-4F7D-9ED6-B61E28E6B37D}
 		{79A3A1EF-9774-4676-96FE-164A06D45ADF} = {0FB2EE00-1CCF-4F7D-9ED6-B61E28E6B37D}
 		{7643EEB5-9B88-4EB1-BD4C-F1DFC8E1ACD6} = {0FB2EE00-1CCF-4F7D-9ED6-B61E28E6B37D}
+		{BA04B166-CE21-42E5-9A19-079497A718A9} = {867EFB1B-A37E-449D-AE89-718EEA801B85}
+		{28BF1B16-9022-460B-9FFD-FB42EF965F59} = {D128A90E-1708-4ED9-B771-223293D9C2D1}
+		{B3D7ED48-4337-475C-AC9F-F74C9AAE7AFD} = {D128A90E-1708-4ED9-B771-223293D9C2D1}
+		{EE971CC6-06AB-464C-B4CD-00307B043275} = {D128A90E-1708-4ED9-B771-223293D9C2D1}
+		{5975FD9A-82D5-49C4-9966-2A6A4D29052B} = {D128A90E-1708-4ED9-B771-223293D9C2D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D5243F1C-2D28-4721-B160-93E2B88B4852}

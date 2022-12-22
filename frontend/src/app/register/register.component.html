@@ -1,0 +1,23 @@
+<h1>Register</h1>
+
+<form #registerForm="ngForm">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input type="text" class="form-control" id="username" name="username" required [(ngModel)]="username">
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="text" class="form-control" id="email" name="email" required [(ngModel)]="email">
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" id="password" name="password" required [(ngModel)]="password">
+  </div>
+
+  <button type="submit" class="btn btn-success" [disabled]="!registerForm.form.valid" (click)="register()">Register</button>
+  <button type="submit" class="btn btn-success" [disabled]="!registerForm.form.valid" (click)="register_admin()">Register Admin</button>
+</form>
+
+<button class="btn btn-secondary" (click)="login()">Login</button>

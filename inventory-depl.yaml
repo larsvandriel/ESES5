@@ -15,6 +15,32 @@ spec:
       containers:
         - name: inventorymanagementservice
           image: larsvandriel/inventorymanagementsystem:latest
+          env:
+          - name: SqlServer
+            valueFrom:
+              secretKeyRef:
+                name: mssql-ims
+                key: CONN_STRING
+          - name: RabbitMQHost
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-host
+                key: RABBITMQ_HOST
+          - name: RabbitMQPort
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-port
+                key: RABBITMQ_PORT
+          - name: RabbitMQUser
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-user
+                key: RABBITMQ_USER
+          - name: RabbitMQPassword
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-pw
+                key: RABBITMQ_PW
 ---
 apiVersion: v1
 kind: Service

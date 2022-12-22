@@ -1,0 +1,181 @@
+version: "3.8"
+
+services:
+  db_product:
+    container_name: mssqlDbProduct
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    volumes:
+      - esmiVolume:/var/opt/mssql/product
+    environment:
+      SA_PASSWORD: "pw123_Example"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433"
+      - "1401:1433"
+    networks:
+      - "esmi"
+    restart: on-failure
+
+  db_inventory:
+    container_name: mssqlDbInventory
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    volumes:
+      - esmiVolume:/var/opt/mssql/inventory
+    environment:
+      SA_PASSWORD: "pw123_Example"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433"
+      - "1402:1433"
+    networks:
+      - "esmi"
+    restart: on-failure
+
+  db_order:
+    container_name: mssqlDbOrder
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    volumes:
+      - esmiVolume:/var/opt/mssql/order
+    environment:
+      SA_PASSWORD: "pw123_Example"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433"
+      - "1403:1433"
+    networks:
+      - "esmi"
+    restart: on-failure
+
+  db_auth:
+    container_name: mssqlDbAuth
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    volumes:
+      - esmiVolume:/var/opt/mssql/auth
+    environment:
+      SA_PASSWORD: "pw123_Example"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433"
+      - "1404:1433"
+    networks:
+      - "esmi"
+    restart: on-failure
+  
+  rabbitmq:
+    restart: on-failure
+    container_name: rabbitmq
+    image: rabbitmq:3.8-management-alpine
+    environment:
+        - RABBITMQ_DEFAULT_USER=myuser
+        - RABBITMQ_DEFAULT_PASS=mypassword
+    ports:
+        # AMQP protocol port
+        - '5672:5672'
+        # HTTP management UI
+        - '15672:15672'
+    networks: 
+      - "esmi"
+  
+  backend_product:
+    restart: on-failure
+    depends_on:
+      - db_product
+      - rabbitmq
+    container_name: ProductManagementSystem
+    build:
+      context: .
+      dockerfile: ProductManagementSystem\pms_api\Dockerfile
+    environment:
+      RabbitMQHost: rabbitmq
+      RabbitMQPort: "5672"
+      RabbitMQUser: "myuser"
+      RabbitMQPassword: "mypassword"
+      SqlServer: "Data Source='mssqlDbProduct';Initial Catalog=ProductDb;Persist Security Info=True;User ID=SA;Password=pw123_Example"
+    ports:
+      - "7001:80"
+    networks:
+      - "esmi"
+
+  backend_inventory:
+    restart: on-failure
+    depends_on:
+      - db_inventory
+      - rabbitmq
+    container_name: InventoryManagementSystem
+    build:
+      context: .
+      dockerfile: InventoryManagementSystem\ims_api\Dockerfile
+    environment:
+      RabbitMQHost: rabbitmq
+      RabbitMQPort: "5672"
+      RabbitMQUser: "myuser"
+      RabbitMQPassword: "mypassword"
+      SqlServer: "Data Source='mssqlDbInventory';Initial Catalog=InventoryDb;Persist Security Info=True;User ID=SA;Password=pw123_Example"
+    ports:
+      - "7002:80"
+    networks:
+      - "esmi"
+
+  backend_order:
+    restart: on-failure
+    depends_on:
+      - db_order
+      - rabbitmq
+    container_name: OrderManagementSystem
+    build:
+      context: .
+      dockerfile: OrderManagementSystem\oms_api\Dockerfile
+    environment:
+      RabbitMQHost: rabbitmq
+      RabbitMQPort: "5672"
+      RabbitMQUser: "myuser"
+      RabbitMQPassword: "mypassword"
+      SqlServer: "Data Source='mssqlDbOrder';Initial Catalog=OrderDb;Persist Security Info=True;User ID=SA;Password=pw123_Example"
+    ports:
+      - "7003:80"
+    networks:
+      - "esmi"
+
+  backend_auth:
+    restart: on-failure
+    depends_on:
+      - db_auth
+      - rabbitmq
+    container_name: AuthenticationService
+    build:
+      context: .
+      dockerfile: AuthenticationService\auth_service\Dockerfile
+    environment:
+      RabbitMQHost: rabbitmq
+      RabbitMQPort: "5672"
+      RabbitMQUser: "myuser"
+      RabbitMQPassword: "mypassword"
+      SqlServer: "Data Source='mssqlDbAuth';Initial Catalog=AuthDb;Persist Security Info=True;User ID=SA;Password=pw123_Example"
+    ports:
+      - "7004:80"
+    networks:
+      - "esmi"
+
+  backend_gateway:
+    restart: on-failure
+    depends_on:
+      - backend_product
+      - backend_inventory
+      - backend_order
+      - backend_auth
+    container_name: ApiGateway
+    build:
+      context: .
+      dockerfile: Gateway\api_gateway\Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+    ports:
+      - "7000:80"
+    networks:
+      - "esmi"
+
+volumes:
+  esmiVolume:
+networks:
+  esmi:
+    external: true

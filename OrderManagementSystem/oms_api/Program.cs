@@ -1,6 +1,7 @@
 using InventoryManagementSystem.API.RabbitMQ;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
+using OrderManagementSystem.API.Helpers;
 using OrderManagementSystem.DataAccessLayer;
 using OrderManagementSystem.Logic;
 using OrderManagementSystem.RabbitMqAccessLayer;
@@ -21,7 +22,14 @@ builder.Services.Configure<IISOptions>(options =>
 });
 
 ConfigurationManager config = builder.Configuration;
-var connectionString = config["mssqlconnection:connectionString"];
+
+ConfigurationLoader.LoadConfigurationValue(config, "SqlServer");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQHost");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPort");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQUser");
+ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPassword");
+
+var connectionString = config["SqlServer"];
 
 builder.Services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(connectionString));
 

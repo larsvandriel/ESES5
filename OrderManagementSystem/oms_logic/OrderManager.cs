@@ -30,9 +30,11 @@ namespace OrderManagementSystem.Logic
             EventSender.SendDecreaseStockEvent(order.Id, order.ProductId, 1);
             while(newOrder.Status == OrderStatus.PENDING)
             {
-                Thread.Sleep(10000);
+                Thread.Sleep(2000);
                 newOrder = Repository.GetOrder(newOrder.Id);
+                Console.WriteLine(newOrder.Status);
             }
+            Console.WriteLine("Order Creation Finished");
             return newOrder;
         }
 
@@ -41,6 +43,20 @@ namespace OrderManagementSystem.Logic
             Order order = Repository.GetOrder(orderId);
             order.Status = OrderStatus.REJECTED;
             Repository.UpdateOrder(order);
+        }
+
+        public void ForgetUser(Guid userId)
+        {
+            foreach (Order order in Repository.GetOrdersFromUser(userId))
+            {
+                order.UserId = Guid.Empty;
+                Repository.UpdateOrder(order);
+            }
+        }
+
+        public List<Order> GetOrdersFromUser(Guid userId)
+        {
+            return Repository.GetOrdersFromUser(userId);
         }
     }
 }

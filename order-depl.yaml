@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ordermanagementservice
+  template:
+    metadata:
+      labels:
+        app: ordermanagementservice
+    spec:
+      containers:
+        - name: ordermanagementservice
+          image: larsvandriel/ordermanagementsystem:latest
+          env:
+          - name: SqlServer
+            valueFrom:
+              secretKeyRef:
+                name: mssql-oms
+                key: CONN_STRING
+          - name: RabbitMQHost
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-host
+                key: RABBITMQ_HOST
+          - name: RabbitMQPort
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-port
+                key: RABBITMQ_PORT
+          - name: RabbitMQUser
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-user
+                key: RABBITMQ_USER
+          - name: RabbitMQPassword
+            valueFrom:
+              secretKeyRef:
+                name: rabbitmq-pw
+                key: RABBITMQ_PW
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-clusterip-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: ordermanagementservice
+  ports:
+  - name: ordermanagementservice
+    protocol: TCP
+    port: 80
+    targetPort: 80
