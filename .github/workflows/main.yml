@@ -298,7 +298,7 @@ jobs:
         working-directory: ./ProductManagementSystem/pms_api
       
       - name: Build
-        run: dotnet build
+        run: dotnet run
         working-directory: ./ProductManagementSystem/pms_api
         env:
           Swagger: "Enabled"
