@@ -284,6 +284,14 @@ jobs:
     name: Security ProductManagementSystem
     needs: sonarcloud_ProductManagementSystem
     runs-on: ubuntu-latest
+    services:
+      rabbitmq:
+        image: rabbitmq:3.8
+        env:
+          RABBITMQ_DEFAULT_USER: myUser
+          RABBITMQ_DEFAULT_PASS: myPassword
+        ports:
+          - 5672
     
     steps:
       - uses: actions/checkout@v2
