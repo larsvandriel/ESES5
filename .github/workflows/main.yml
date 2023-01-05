@@ -310,6 +310,10 @@ jobs:
         working-directory: ./ProductManagementSystem/pms_api
         env:
           Swagger: "Enabled"
+          RabbitMQHost: "rabbitmq"
+          RabbitMQPort: 5672
+          RabbitMQUser: "myUser"
+          RabbitMQPassword: "myPassword"
       
       - name: ZAP Scan
         uses: zaproxy/action-api-scan@v0.1.1
