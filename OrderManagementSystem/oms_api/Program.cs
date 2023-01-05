@@ -23,15 +23,26 @@ builder.Services.Configure<IISOptions>(options =>
 
 ConfigurationManager config = builder.Configuration;
 
-ConfigurationLoader.LoadConfigurationValue(config, "SqlServer");
+ConfigurationLoader.LoadConfigurationValue(config, "Swagger");
+ConfigurationLoader.LoadConfigurationValue(config, "StorageType");
+
 ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQHost");
 ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPort");
 ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQUser");
 ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPassword");
 
-var connectionString = config["SqlServer"];
-
-builder.Services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(connectionString));
+switch (config["StorageType"])
+{
+    case "SqlServer":
+        ConfigurationLoader.LoadConfigurationValue(config, "SqlServer");
+        var connectionString = config["SqlServer"];
+        builder.Services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(connectionString));
+        break;
+    
+    default:
+        builder.Services.AddDbContext<RepositoryContext>(options => options.UseInMemoryDatabase("ESES5_OrderDb"));
+        break;
+}
 
 builder.Services.AddHostedService<MessageBusSubscriberOrderApprovedEvent>();
 builder.Services.AddHostedService<MessageBusSubscriberOrderDeniedEvent>();
@@ -48,7 +59,7 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || config["Swagger"].Equals("Enabled"))
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -64,8 +75,6 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions()
 app.UseRouting();
 
 app.UseCors("CorsPolicy");
-
-
 
 app.UseHttpsRedirection();
 
