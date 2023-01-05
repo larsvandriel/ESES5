@@ -306,7 +306,7 @@ jobs:
       - name: ZAP Scan
         uses: zaproxy/action-api-scan@v0.1.1
         with:
-          target: 'http://localhost:7000/swagger'
+          target: 'http://localhost:7001/swagger'
 
   dockerize_ProductManagementSystem:
     needs: security_ProductManagementSystem
