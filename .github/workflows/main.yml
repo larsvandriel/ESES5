@@ -288,8 +288,8 @@ jobs:
       rabbitmq:
         image: rabbitmq:3.8
         env:
-          RABBITMQ_DEFAULT_USER: myUser
-          RABBITMQ_DEFAULT_PASS: myPassword
+          RABBITMQ_DEFAULT_USER: "myUser"
+          RABBITMQ_DEFAULT_PASS: "myPassword"
         ports:
           - 5672
     
@@ -310,7 +310,7 @@ jobs:
         working-directory: ./ProductManagementSystem/pms_api
         env:
           Swagger: "Enabled"
-          RabbitMQHost: "127.0.0.1"
+          RabbitMQHost: "job.services.rabbitmq"
           RabbitMQPort: 5672
           RabbitMQUser: "myUser"
           RabbitMQPassword: "myPassword"
