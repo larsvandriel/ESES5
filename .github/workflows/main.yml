@@ -311,8 +311,8 @@ jobs:
         working-directory: ./ProductManagementSystem/pms_api
         env:
           Swagger: "Enabled"
-          RabbitMQHost: job.services.rabbitmq
-          RabbitMQPort: 5672
+          RabbitMQHost: "job.services.rabbitmq"
+          RabbitMQPort: "5672"
           RabbitMQUser: "myUser"
           RabbitMQPassword: "myPassword"
       
