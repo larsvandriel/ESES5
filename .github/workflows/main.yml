@@ -291,7 +291,7 @@ jobs:
           RABBITMQ_DEFAULT_USER: "myUser"
           RABBITMQ_DEFAULT_PASS: "myPassword"
         ports:
-          - 5672
+          - 5673
         options: --health-cmd "rabbitmqctl node_health_check" --health-interval 10s --health-timeout 5s --health-retries 5
     
     steps:
