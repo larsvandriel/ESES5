@@ -311,7 +311,7 @@ jobs:
         env:
           Swagger: "Enabled"
           RabbitMQHost: rabbitmq
-          RabbitMQPort: ${{ job.services.rabbitmq.ports['5672'] }}
+          RabbitMQPort: 5672
           RabbitMQUser: "myUser"
           RabbitMQPassword: "myPassword"
       
