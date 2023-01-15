@@ -284,6 +284,15 @@ jobs:
     name: Security ProductManagementSystem
     needs: sonarcloud_ProductManagementSystem
     runs-on: ubuntu-latest
+    services:
+      rabbitmq:
+        image: rabbitmq:3.8
+        env:
+          RABBITMQ_DEFAULT_USER: "myUser"
+          RABBITMQ_DEFAULT_PASS: "myPassword"
+        ports:
+          - 5673
+        options: --health-cmd "rabbitmqctl node_health_check" --health-interval 10s --health-timeout 5s --health-retries 5
     
     steps:
       - uses: actions/checkout@v2
@@ -298,13 +307,19 @@ jobs:
         working-directory: ./ProductManagementSystem/pms_api
       
       - name: Build
-        run: dotnet build
+        run: dotnet run
         working-directory: ./ProductManagementSystem/pms_api
+        env:
+          Swagger: "Enabled"
+          RabbitMQHost: "job.services.rabbitmq"
+          RabbitMQPort: "5673"
+          RabbitMQUser: "myUser"
+          RabbitMQPassword: "myPassword"
       
       - name: ZAP Scan
         uses: zaproxy/action-api-scan@v0.1.1
         with:
-          target: 'http://localhost:7000'
+          target: 'http://localhost:7001/swagger'
 
   dockerize_ProductManagementSystem:
     needs: security_ProductManagementSystem
