@@ -41,6 +41,16 @@ spec:
               secretKeyRef:
                 name: rabbitmq-pw
                 key: RABBITMQ_PW
+          - name: StorageTypeOrder
+            valueFrom:
+              secretKeyRef:
+                name: storage-order
+                key: STORAGE_TYPE
+          - name: CosmosDb
+            valueFrom:
+              secretKeyRef:
+                name: cosmosdb-auth
+                key: CONN_STRING
 ---
 apiVersion: v1
 kind: Service
