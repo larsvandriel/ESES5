@@ -90,6 +90,7 @@ services:
       RabbitMQPort: "5672"
       RabbitMQUser: "myuser"
       RabbitMQPassword: "mypassword"
+      StorageType: "SqlServer"
       SqlServer: "Data Source='mssqlDbProduct';Initial Catalog=ProductDb;Persist Security Info=True;User ID=SA;Password=pw123_Example"
     ports:
       - "7001:80"
@@ -110,6 +111,7 @@ services:
       RabbitMQPort: "5672"
       RabbitMQUser: "myuser"
       RabbitMQPassword: "mypassword"
+      StorageType: "SqlServer"
       SqlServer: "Data Source='mssqlDbInventory';Initial Catalog=InventoryDb;Persist Security Info=True;User ID=SA;Password=pw123_Example"
     ports:
       - "7002:80"
@@ -130,6 +132,7 @@ services:
       RabbitMQPort: "5672"
       RabbitMQUser: "myuser"
       RabbitMQPassword: "mypassword"
+      StorageType: "SqlServer"
       SqlServer: "Data Source='mssqlDbOrder';Initial Catalog=OrderDb;Persist Security Info=True;User ID=SA;Password=pw123_Example"
     ports:
       - "7003:80"
@@ -150,6 +153,7 @@ services:
       RabbitMQPort: "5672"
       RabbitMQUser: "myuser"
       RabbitMQPassword: "mypassword"
+      StorageType: "SqlServer"
       SqlServer: "Data Source='mssqlDbAuth';Initial Catalog=AuthDb;Persist Security Info=True;User ID=SA;Password=pw123_Example"
     ports:
       - "7004:80"

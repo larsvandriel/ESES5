@@ -16,15 +16,26 @@ builder.Services.AddCors(options =>
         builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
-ConfigurationLoader.LoadConfigurationValue(config, "SqlServer");
+ConfigurationLoader.LoadConfigurationValue(config, "StorageType");
 ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQHost");
 ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPort");
 ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQUser");
 ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPassword");
 
-var connectionString = config["SqlServer"];
+switch (config["StorageType"])
+{
+    case "SqlServer":
+        ConfigurationLoader.LoadConfigurationValue(config, "SqlServer");
+        var connectionString = config["SqlServer"];
+        builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+        break;
 
-builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+    default:
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseInMemoryDatabase("ESES5_AuthDb"));
+        break;
+}
+
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()

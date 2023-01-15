@@ -23,23 +23,39 @@ builder.Services.Configure<IISOptions>(options =>
 
 ConfigurationManager config = builder.Configuration;
 
-ConfigurationLoader.LoadConfigurationValue(config, "SqlServer");
+ConfigurationLoader.LoadConfigurationValue(config, "StorageType");
+
 ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQHost");
 ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPort");
 ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQUser");
 ConfigurationLoader.LoadConfigurationValue(config, "RabbitMQPassword");
-
-var connectionString = config["SqlServer"];
-
-Console.WriteLine(connectionString);
 
 Console.WriteLine(config["RabbitMQHost"]);
 Console.WriteLine(config["RabbitMQPort"]);
 Console.WriteLine(config["RabbitMQUser"]);
 Console.WriteLine(config["RabbitMQPassword"]);
 
+string connectionString;
 
-builder.Services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(connectionString));
+switch (config["StorageType"])
+{
+    case "SqlServer":
+        ConfigurationLoader.LoadConfigurationValue(config, "SqlServer");
+        connectionString = config["SqlServer"];
+        builder.Services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(connectionString));
+        break;
+
+    case "CosmosDb":
+        ConfigurationLoader.LoadConfigurationValue(config, "CosmosDb");
+        connectionString = config["CosmosDb"];
+        builder.Services.AddDbContext<RepositoryContext>(options => options.UseCosmos(connectionString, "ESES5_InventoryDb"));
+        break;
+
+    default:
+        builder.Services.AddDbContext<RepositoryContext>(options => options.UseInMemoryDatabase("ESES5_InventoryDb"));
+        break;
+}
+
 
 builder.Services.AddHostedService<MessageBusSubscriberDecreaseStockEvent>();
 builder.Services.AddHostedService<MessageBusSubscriberProductCreatedEvent>();
